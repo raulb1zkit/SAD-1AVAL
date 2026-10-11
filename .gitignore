@@ -1,0 +1,14 @@
+# Artefactos y cachés generados localmente
+tmp/
+
+# Metadatos de herramientas y configuración personal
+.agents/
+.aws/
+.codex/
+.obsidian/
+
+# Archivos del sistema/editor
+.DS_Store
+Thumbs.db
+*.swp
+*~

@@ -34,8 +34,10 @@ jobs:
           rm -rf /tmp/quartz/content
           mkdir -p /tmp/quartz/content
           cp -a site/content/. /tmp/quartz/content/
-          cp -a apuntes /tmp/quartz/content/apuntes
-          cp -a docs /tmp/quartz/content/docs
+          mkdir -p /tmp/quartz/content/apuntes /tmp/quartz/content/docs
+          cp -a apuntes/. /tmp/quartz/content/apuntes/
+          cp -a docs/. /tmp/quartz/content/docs/
+          cp -a site/quartz.ts /tmp/quartz/quartz.ts
 
       - name: Instalar dependencias de Quartz
         working-directory: /tmp/quartz

@@ -12,3 +12,7 @@ tmp/
 Thumbs.db
 *.swp
 *~
+
+# Salida local del generador Quartz
+site/public/
+site/.quartz/

@@ -48,9 +48,9 @@ jobs:
       - name: Generar el sitio
         working-directory: /tmp/quartz
         run: |
-          mkdir -p static/entrenador
-          cp "$GITHUB_WORKSPACE/entrenador/public.html" static/entrenador/index.html
-          python3 "$GITHUB_WORKSPACE/entrenador/build_static.py" --output static/entrenador/questions.json
+          mkdir -p quartz/static/entrenador
+          cp "$GITHUB_WORKSPACE/entrenador/public.html" quartz/static/entrenador/index.html
+          python3 "$GITHUB_WORKSPACE/entrenador/build_static.py" --output quartz/static/entrenador/questions.json
           npx quartz build
 
       - name: Subir el sitio generado

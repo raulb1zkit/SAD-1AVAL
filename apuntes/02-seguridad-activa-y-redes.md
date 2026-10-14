@@ -129,3 +129,5 @@ WPA-Enterprise evita una clave compartida: credenciales por usuario, revocación
 |---|---|---|
 | Firmas | eficaz frente a ataques conocidos | falla ante novedad/variantes |
 | Anomalías | detecta desviaciones nuevas | falsos positivos |
+
+Para practicar los filtros de captura y visualización de los boletines, consulta la [chuleta de Wireshark](05-wireshark-filtros-practica.md).

@@ -13,6 +13,8 @@ Vault de apuntes y material de apoyo para SAD.
 - [Seguridad activa y redes](apuntes/02-seguridad-activa-y-redes.md)
 - [Glosario por bloques](apuntes/03-glosario.md)
 - [Test tipo test](apuntes/04-test-autoevaluacion.md)
+- [Práctica de filtros Wireshark](apuntes/05-wireshark-filtros-practica.md)
+- [Entrenador de test](entrenador/)
 
 ## PDFs de referencia
 

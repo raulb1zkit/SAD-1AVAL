@@ -16,3 +16,4 @@ Thumbs.db
 # Salida local del generador Quartz
 site/public/
 site/.quartz/
+entrenador/data/

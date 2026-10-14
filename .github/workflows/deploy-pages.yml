@@ -37,9 +37,6 @@ jobs:
           mkdir -p /tmp/quartz/content/apuntes /tmp/quartz/content/docs
           cp -a apuntes/. /tmp/quartz/content/apuntes/
           cp -a docs/. /tmp/quartz/content/docs/
-          mkdir -p /tmp/quartz/static/entrenador
-          cp entrenador/public.html /tmp/quartz/static/entrenador/index.html
-          python3 entrenador/build_static.py --output /tmp/quartz/static/entrenador/questions.json
           cp -a site/quartz.ts /tmp/quartz/quartz.ts
 
       - name: Instalar dependencias de Quartz
@@ -50,7 +47,11 @@ jobs:
 
       - name: Generar el sitio
         working-directory: /tmp/quartz
-        run: npx quartz build
+        run: |
+          mkdir -p static/entrenador
+          cp "$GITHUB_WORKSPACE/entrenador/public.html" static/entrenador/index.html
+          python3 "$GITHUB_WORKSPACE/entrenador/build_static.py" --output static/entrenador/questions.json
+          npx quartz build
 
       - name: Subir el sitio generado
         uses: actions/upload-pages-artifact@v3

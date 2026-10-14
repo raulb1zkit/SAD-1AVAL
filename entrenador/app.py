@@ -160,6 +160,21 @@ QUESTIONS.extend([
     ("riesgo", "El impacto de un ataque puede ser:", ["Pérdida económica o de datos", "Solo una IP", "Un hash", "Una MAC"], 0, "Impacto es la consecuencia o daño resultante del incidente."),
 ])
 
+# Variantes de recuerdo activo: repiten conceptos clave con las opciones rotadas.
+# Sirven para ampliar simulacros sin asociar una respuesta a una letra fija.
+for review_index in range(65):
+    category, text, options, answer, explanation = QUESTIONS[review_index]
+    shift = (review_index % 3) + 1
+    rotated_options = options[shift:] + options[:shift]
+    rotated_answer = (answer - shift) % len(options)
+    QUESTIONS.append((
+        category,
+        f"Repaso rápido: {text}",
+        rotated_options,
+        rotated_answer,
+        explanation,
+    ))
+
 def public_question(index):
     category, text, options, _, _ = QUESTIONS[index]
     return {"id": index, "category": category, "text": text, "options": options}

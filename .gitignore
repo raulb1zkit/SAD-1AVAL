@@ -17,3 +17,4 @@ Thumbs.db
 site/public/
 site/.quartz/
 entrenador/data/
+entrenador/__pycache__/

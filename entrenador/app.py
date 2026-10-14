@@ -175,6 +175,15 @@ for review_index in range(65):
         explanation,
     ))
 
+SECTION_CATEGORIES = {
+    "fundamentos": {"fundamentos", "pilares", "riesgo", "vulnerabilidades", "auditoria"},
+    "amenazas": {"malware", "fisica", "continuidad", "copias", "forense", "raid"},
+    "cripto": {"cripto", "acceso", "biometria", "credenciales", "certificados", "publicas", "correo"},
+    "ataques": {"ataques", "redes", "web"},
+    "wifi": {"wifi", "monitorizacion"},
+    "wireshark": {"display", "captura"},
+}
+
 def public_question(index):
     category, text, options, _, _ = QUESTIONS[index]
     return {"id": index, "category": category, "text": text, "options": options}
@@ -212,8 +221,13 @@ class Handler(SimpleHTTPRequestHandler):
         route = urlparse(self.path).path
         if route == "/api/new-round":
             size = min(int(body.get("size", 10)), len(QUESTIONS))
-            # Durante esta fase de estudio se prioriza teoría; Wireshark queda aparte.
-            order = [i for i, question in enumerate(QUESTIONS) if question[0] not in {"display", "captura"}]
+            section = body.get("section")
+            if section in SECTION_CATEGORIES:
+                categories = SECTION_CATEGORIES[section]
+                order = [i for i, question in enumerate(QUESTIONS) if question[0] in categories]
+            else:
+                # Durante esta fase de estudio general se prioriza teoría; Wireshark queda aparte.
+                order = [i for i, question in enumerate(QUESTIONS) if question[0] not in {"display", "captura"}]
             random.SystemRandom().shuffle(order)
             size = min(size, len(order))
             state = {"round": order[:size], "answers": [], "finished": False}

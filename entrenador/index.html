@@ -5,7 +5,7 @@ let data,current=0,locked=false;
 async function api(url,body){return fetch(url,{method:body?'POST':'GET',headers:{'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined}).then(r=>r.json())}
 async function load(){data=await api('/api/state');if(!data.state.round.length){show('start');return}current=data.answered;if(data.state.finished){renderSummary();return}show('quiz');renderQuestion()}
 function show(id){['start','quiz','summary'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==id))}
-async function newRound(size){await api('/api/new-round',{size});await load()}
+async function newRound(size,section=null){await api('/api/new-round',{size,section});await load()}
 function renderQuestion(){locked=false;let q=data.questions[current];document.getElementById('progress').textContent=`Pregunta ${current+1} de ${data.questions.length}`;document.getElementById('category').textContent=q.category;document.getElementById('question').textContent=q.text;let box=document.getElementById('options');box.innerHTML='';q.options.forEach((text,i)=>{let b=document.createElement('button');b.className='option';b.textContent=String.fromCharCode(65+i)+'. '+text;b.onclick=()=>answer(i,b);box.appendChild(b)});document.getElementById('feedback').className='feedback hidden';document.getElementById('next').classList.add('hidden')}
 async function answer(selected,button){if(locked)return;locked=true;document.querySelectorAll('.option').forEach(x=>x.disabled=true);button.classList.add('selected');let r=await api('/api/answer',{position:current,selected});let f=document.getElementById('feedback');f.className='feedback '+(r.correct?'ok':'bad');f.innerHTML=`<strong>${r.correct?'Correcto.':'No exactamente.'}</strong> ${r.explanation}`;let n=document.getElementById('next');n.textContent=r.finished?'Ver resultado':'Siguiente pregunta';n.classList.remove('hidden')}
 async function nextQuestion(){data=await api('/api/state');current=data.answered;if(data.state.finished)renderSummary();else renderQuestion()}
@@ -22,8 +22,12 @@ function addSummaryRounds(){
   group.dataset.rounds = 'true';
   group.className = 'modes';
   group.style.marginTop = '12px';
-  group.innerHTML = '<button class="secondary" onclick="newRound(20)">Nueva ronda de 20</button><button class="secondary" onclick="newRound(60)">Simulacro de 60</button>';
+  group.innerHTML = '<button class="secondary" onclick="newRound(20)">Nueva ronda de 20</button><button class="secondary" onclick="newRound(60)">Simulacro de 60</button><button class="secondary" onclick="show(\'start\')">Elegir apartado</button>';
   summary.appendChild(group);
 }
 setInterval(addSummaryRounds, 300);
+const sectionPanel = document.createElement('div');
+sectionPanel.style.marginTop = '22px';
+sectionPanel.innerHTML = '<div class="eyebrow">Test por apartado</div><p>Elige un bloque y practica solo ese contenido.</p><div class="modes"><select id="section" aria-label="Apartado"><option value="fundamentos">Fundamentos y riesgo</option><option value="amenazas">Amenazas, continuidad y RAID</option><option value="cripto">Criptografía, credenciales y certificados</option><option value="ataques">Ataques, red y web</option><option value="wifi">Wi-Fi y monitorización</option><option value="wireshark">Wireshark</option></select><button onclick="newRound(10, document.getElementById(\'section\').value)">10 del apartado</button><button class="secondary" onclick="newRound(20, document.getElementById(\'section\').value)">20 del apartado</button></div>';
+document.getElementById('start').appendChild(sectionPanel);
 </script></body></html>

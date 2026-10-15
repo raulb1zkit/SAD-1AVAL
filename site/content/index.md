@@ -14,6 +14,7 @@ Vault de apuntes y material de apoyo para SAD.
 - [Glosario por bloques](apuntes/03-glosario.md)
 - [Test tipo test](apuntes/04-test-autoevaluacion.md)
 - [Práctica de filtros Wireshark](apuntes/05-wireshark-filtros-practica.md)
+- [Modelo de examen Wireshark resuelto](apuntes/06-modelo-examen-wireshark-resuelto.md)
 - [Entrenador de test](static/entrenador/)
 
 ## PDFs de referencia
